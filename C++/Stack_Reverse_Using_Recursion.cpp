@@ -1,4 +1,7 @@
-#include<bits/stdc++.h>
+// #include<bits/stdc++.h>
+#include<stack>
+#include<iostream>
+
 using namespace std;
 
 void pushBottom(int y, stack<int> &s);
@@ -43,10 +46,13 @@ int main()
 {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL); cout.tie(NULL);
+	
 	stack <int> s;
-	int x;
-	while (cin >> x)
+	int x, size;
+	cin >> size;
+	for (int i = 0; i<size; i++)
 	{
+		cin >> x;
 		s.push(x);
 	}
 	reverse(s);

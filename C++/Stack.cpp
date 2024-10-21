@@ -1,6 +1,7 @@
 
 // CPP program to demonstrate working of STL stack
-#include <bits/stdc++.h>
+#include <stack>
+#include <iostream>
 using namespace std;
 
 void showstack(stack <int> s)
