@@ -1,5 +1,5 @@
 // { Driver Code Starts
-#include <bits/stdc++.h>
+#include <iostream>
 
 using namespace std;
 
@@ -45,6 +45,7 @@ bool isSafe(int i, int j, int N, vector<int> maze[])
 {
     return (i < N && j < N && maze[i][j] != 0);
 }
+
 bool solveRec(int i, int j, int N, vector<int> maze[], vector<int> sol[])
 {
     if (i == N - 1 && j == N - 1 && maze[i][j] != 0)

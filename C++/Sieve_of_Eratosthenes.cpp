@@ -1,5 +1,5 @@
-#include<bits/stdc++.h>
-#define SPEED ios::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+#include <iostream>
+#include <vector>
 #define ll long long
 #define ld long double
 #define mp make_pair
@@ -12,14 +12,10 @@ using namespace std;
 
 void sieve(int N)
 {
-	bool isPrime[N + 1];
-	for (int i = 0; i <= N; ++i)
-	{
-		isPrime[i] = true;
-	}
+	vector<bool> isPrime(N + 1, true);
 	isPrime[0] = false;
 	isPrime[1] = false;
-	for (int i = 2; i * i <= N; ++i)
+	for (int i = 2; i <= N; ++i)
 	{
 		if (isPrime[i] == true)
 		{
@@ -41,8 +37,8 @@ void sieve(int N)
 
 int main()
 {
-	SPEED;
 	int n;
+	cout << "Enter n: ";
 	cin >> n;
 	sieve(n);
 	return 0;

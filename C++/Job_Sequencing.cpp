@@ -1,7 +1,7 @@
 // { Driver Code Starts
 // Program to find the maximum profit job sequence from a given array
 // of jobs with deadlines and profits
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
 // A structure to represent a job
