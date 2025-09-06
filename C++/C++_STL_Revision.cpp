@@ -2,6 +2,7 @@
 // Assumes: using namespace std;
 
 #include <math.h>
+
 #include <algorithm>
 #include <iostream>
 #include <map>

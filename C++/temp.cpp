@@ -1,52 +1,42 @@
-#include <iostream>
 #include <math.h>
+
 #include <algorithm>
 #include <climits>
-#include <string>
-#include <vector>
-#include <numeric>
-#include <unordered_set>
+#include <iostream>
 #include <map>
+#include <numeric>
 #include <set>
+#include <string>
+#include <unordered_set>
+#include <vector>
 using namespace std;
 
 // Check prime
-bool isPrime(int n) 
-{
-    if (n == 1) 
-    {
+bool isPrime(int n) {
+    if (n == 1) {
         return false;
     }
-    if (n == 2 || n == 3) 
-    {
+    if (n == 2 || n == 3) {
         return true;
     }
-    if (n % 2 == 0 || n % 3 == 0)
-    {
+    if (n % 2 == 0 || n % 3 == 0) {
         return false;
     }
-    for (int i = 5; i * i <= n; i += 6) 
-    {
-        if (n % i == 0 || n % (i + 2) == 0)
-        {
+    for (int i = 5; i * i <= n; i += 6) {
+        if (n % i == 0 || n % (i + 2) == 0) {
             return false;
         }
-        
     }
     return true;
 }
 
 // Find prime factors
-vector<int> primeFactors(int n) 
-{
+vector<int> primeFactors(int n) {
     vector<int> result;
-    for (int i = 2; i < n; i++) 
-    {
-        if (isPrime(i)) 
-        {
+    for (int i = 2; i < n; i++) {
+        if (isPrime(i)) {
             int x = i;
-            while (n % x == 0)
-            {
+            while (n % x == 0) {
                 result.push_back(i);
                 x = x * i;
             }
@@ -55,18 +45,14 @@ vector<int> primeFactors(int n)
     return result;
 }
 
-vector<string> powerSet(string &str) 
-{
+vector<string> powerSet(string &str) {
     int n = str.size();
     int power = 1 << n;
     vector<string> ans;
-    for (int i = 0; i < power; i++)
-    {
+    for (int i = 0; i < power; i++) {
         string res = "";
-        for (int j = 0; j < n; j++)
-        {
-            if ((i & (1 << j)) != 0) 
-            {
+        for (int j = 0; j < n; j++) {
+            if ((i & (1 << j)) != 0) {
                 res += str[j];
             }
         }
@@ -75,25 +61,21 @@ vector<string> powerSet(string &str)
     return ans;
 }
 
-bool isPalin(string &str, int s, int e) 
-{
+bool isPalin(string &str, int s, int e) {
     if (s >= e) {
         return true;
     }
     return (str[s] == str[e] && isPalin(str, s + 1, e - 1));
 }
 
-int sumOfDigits(int n) 
-{
-    if (n == 0)
-    {
+int sumOfDigits(int n) {
+    if (n == 0) {
         return 0;
     }
     return n % 10 + sumOfDigits(n / 10);
 }
 
-int cuttingRope(int n, int a, int b, int c)
-{
+int cuttingRope(int n, int a, int b, int c) {
     if (n == 0) {
         return 0;
     }
@@ -107,10 +89,8 @@ int cuttingRope(int n, int a, int b, int c)
     return 1 + res;
 }
 
-void tower(int n, char A, char B, char C)
-{
-    if (n == 1)
-    {
+void tower(int n, char A, char B, char C) {
+    if (n == 1) {
         cout << "Move 1 from " << A << " to " << C << "\n";
         return;
     }
@@ -119,49 +99,39 @@ void tower(int n, char A, char B, char C)
     tower(n - 1, B, A, C);
 }
 
-int subsetSum(int sum, int idx, vector<int> &arr)
-{
-    if (sum == 0)
-    {
+int subsetSum(int sum, int idx, vector<int> &arr) {
+    if (sum == 0) {
         return 1;
     }
-    if (sum < 0 || idx == arr.size())
-    {
+    if (sum < 0 || idx == arr.size()) {
         return 0;
     }
     return subsetSum(sum - arr[idx], idx + 1, arr) + subsetSum(sum, idx + 1, arr);
 }
 
-void permutation(string &s, int i = 0)
-{
-    if (i == s.size() - 1)
-    {
+void permutation(string &s, int i = 0) {
+    if (i == s.size() - 1) {
         cout << s << "\n";
         return;
     }
-    for (int j = i; j < s.size(); j++)
-    {
+    for (int j = i; j < s.size(); j++) {
         swap(s[i], s[j]);
         permutation(s, i + 1);
         swap(s[i], s[j]);
     }
 }
 
-void duplicatesRemove(vector<int> &arr)
-{
+void duplicatesRemove(vector<int> &arr) {
     int n = arr.size();
     int size = 1;
-    for (int i = 1; i < n; i++)
-    {
-        if (arr[i] != arr[size - 1])
-        {
+    for (int i = 1; i < n; i++) {
+        if (arr[i] != arr[size - 1]) {
             arr[size] = arr[i];
             size++;
         }
     }
     cout << "Size: " << size << "\n";
-    for (int i = 0; i < size; i++)
-    {
+    for (int i = 0; i < size; i++) {
         cout << arr[i] << " ";
     }
 }
@@ -184,11 +154,10 @@ vector<int> slidingWindow(vector<int> &arr, int k) {
     int sumOfFirstK = 0;
     int sum = accumulate(arr.begin(), arr.begin() + k, 0);
     cout << sum << endl;
-    return vector<int> {2, 3};
+    return vector<int>{2, 3};
 }
 
 void subsets(string &s, string curr = "", int idx = 0) {
-
     if (idx == s.size()) {
         cout << curr << "\n";
         return;
@@ -197,82 +166,67 @@ void subsets(string &s, string curr = "", int idx = 0) {
     subsets(s, curr, idx + 1);
 }
 
-bool subarrySumK(int arr[], int n, int k) 
-{
+bool subarrySumK(int arr[], int n, int k) {
     int s = 0, e = 0;
     int res = 0;
     int curSum = 0;
-    for (e = 0; e < n; e++) 
-    {
+    for (e = 0; e < n; e++) {
         curSum += arr[e];
-        while (curSum > k) 
-        {
+        while (curSum > k) {
             curSum -= arr[s];
             s++;
         }
-        if (curSum == k) 
-        {
+        if (curSum == k) {
             return true;
         }
     }
     return false;
 }
 
-int summation(int s, int e, int arr[])
-{
+int summation(int s, int e, int arr[]) {
     int sum = 0;
-    for (int i = s; i <= e; i++)
-    {
+    for (int i = s; i <= e; i++) {
         sum += arr[i];
     }
     return sum;
 }
 
-int allocateMinPages(int arr[], int n, int k)
-{
-    if (k == 1)
-    {
+int allocateMinPages(int arr[], int n, int k) {
+    if (k == 1) {
         return summation(0, n - 1, arr);
     }
-    if (n == 1)
-    {
+    if (n == 1) {
         return arr[0];
     }
     int res = INT_MAX;
-    for (int i = 1; i < n; i++)
-    {
+    for (int i = 1; i < n; i++) {
         int perCut = max(allocateMinPages(arr, i, k - 1), summation(i, n - 1, arr));
         res = min(res, perCut);
     }
     return res;
 }
 
-void insertionSort(int arr[], int n)
-{
-    for (int i = 1; i < n; i++)
-    {
+void insertionSort(int arr[], int n) {
+    for (int i = 1; i < n; i++) {
         int j = i;
-        while (j > 0 && arr[j] < arr[j - 1])
-        {
+        while (j > 0 && arr[j] < arr[j - 1]) {
             swap(arr[j], arr[j - 1]);
             j--;
         }
     }
 }
 
-vector<vector<int>> intervals(vector<vector<int>> &nums)
-{
+vector<vector<int>> intervals(vector<vector<int>> &nums) {
     int m = nums.size();
     int n = nums[0].size();
     vector<vector<int>> res;
-    
+
     sort(nums.begin(), nums.end(), [](const vector<int> &a, const vector<int> &b) {
         return a[0] < b[0];
     });
-    
+
     res.push_back({nums[0][0], nums[0][1]});
-    for(int i = 1; i < m; i++)
-    {
+    for (int i = 1; i < m; i++) {
         if (res.back().back() >= nums[i].front()) {
             res.back().front() = min(res.back().front(), nums[i].front());
             res.back().back() = max(res.back().back(), nums[i].back());
@@ -303,9 +257,9 @@ int lcs(vector<int> &arr) {
 
 // Custom comparator: sort strings by length, then lexicographically
 struct CustomCompare {
-    bool operator()(const string& a, const string& b) const {
+    bool operator()(const string &a, const string &b) const {
         if (a.length() == b.length())
-            return a < b;  // fallback to lexicographical order
+            return a < b;                // fallback to lexicographical order
         return a.length() < b.length();  // shorter string comes first
     }
 };
@@ -353,7 +307,7 @@ void stockSpan(vector<int> &arr) {
         }
         span.push_back(curSpan);
     }
-    for (auto &x: span) {
+    for (auto &x : span) {
         cout << x << " ";
     }
 }
@@ -390,8 +344,24 @@ int hPartition(int arr[], int l, int h) {
     }
 }
 
-int main()
-{
-    vector<int> dx = {0,1,2,3};
-    cout << dx.size();
+int main() {
+    vector<int> v = {1, 2, 3};
+    v.push_back(4);
+    v.pop_back();
+    int n = v.size();
+    bool empty = v.empty();
+    v.clear();
+    for (int x : v) { /*...*/
+    }
+    // Sorting
+    sort(v.begin(), v.end());
+    sort(v.rbegin(), v.rend());
+    sort(v.begin(), v.end(), greater<int>());
+    sort(v.begin(), v.end(), [](int a, int b) {
+        return a > b;
+    });
+    // Remove element idiom
+    v.erase(remove(v.begin(), v.end(), 5), v.end());
+    // Lower/upper bound (needs sorted)
+    auto it = lower_bound(v.begin(), v.end(), 10);
 }
