@@ -41,15 +41,17 @@ for (int x : v) {
 
 // Sorting
 sort(v.begin(), v.end());
-sort(v.rbegin(), v.rend());
-sort(v.begin(), v.end(), greater<int>());
-sort(v.begin(), v.end(), [](int a, int b) { return a > b; });
+sort(v.rbegin(), v.rend());     // decreasing order sort
+sort(v.begin(), v.end(), greater<int>());       // decreasing order sort
+sort(v.begin(), v.end(), [](int a, int b) { 
+    return a > b; 
+});
 
 // Remove element idiom
 v.erase(remove(v.begin(), v.end(), 5), v.end());
 
 // Lower/upper bound (requires sorted)
-auto it = lower_bound(v.begin(), v.end(), 10);
+auto it = lower_bound(v.begin(), v.end(), 10);  // first element >= 10
 ```
 
 ---
@@ -138,7 +140,9 @@ minpq.push(7);
 
 // custom comparator (by second of pair)
 using pii = pair<int, int>;
-auto cmp = [](const pii &a, const pii &b) { return a.second > b.second; };
+auto cmp = [](const pii &a, const pii &b) { 
+    return a.second > b.second; 
+};
 priority_queue<pii, vector<pii>, decltype(cmp)> pq2(cmp);
 ```
 
@@ -361,30 +365,41 @@ optional<int> oi;
 oi = 5;
 if (oi) cout << *oi;
 
+// variant
 variant<int, string, double> var;
-var = 10;
-var = string("hi");
-visit([](auto &&val) { cout << val; }, var);
+var = 10;                 // holds int
+var = string("hi");       // holds string
 
+// access using std::get
+auto s = get<string>(var);   // throws if wrong type
+
+// access with index
+cout << var.index(); // 1 => currently holds string (0-based)
+
+// check active type safely
+if (holds_alternative<string>(var)) {
+    cout << get<string>(var);
+}
+
+// visit (type-safe dispatch)
+visit([](auto &&val) {
+    cout << val;
+}, var);
+
+// variant with monostate (useful for default)
+variant<monostate, int, double> v2;  // starts with monostate
+if (holds_alternative<monostate>(v2)) {
+    cout << "empty";
+}
+
+// any
 any a2 = 42;
 if (a2.has_value()) cout << any_cast<int>(a2);
 ```
 
 ---
 
-## 20. `chrono` timing
-
-```cpp
-using namespace chrono;
-auto st = high_resolution_clock::now();
-// ... work ...
-auto ed = high_resolution_clock::now();
-cout << duration_cast<microseconds>(ed - st).count() << " us\n";
-```
-
----
-
-## 21. Random
+## 20. Random
 
 ```cpp
 mt19937 rng((uint64_t)chrono::steady_clock::now().time_since_epoch().count());
@@ -395,19 +410,7 @@ shuffle(v.begin(), v.end(), rng);
 
 ---
 
-## 22. Filesystem (C++17)
-
-```cpp
-#include <filesystem>
-namespace fs = std::filesystem;
-for (auto &p : fs::directory_iterator(".")) {
-    cout << p.path() << "\n";
-}
-```
-
----
-
-## 23. Smart Pointers
+## 21. Smart Pointers
 
 ```cpp
 unique_ptr<int> up = make_unique<int>(5);
@@ -421,44 +424,7 @@ if (auto locked = wp.lock()) {
 
 ---
 
-## 24. Custom Hash / Equality (robust for CP)
-
-```cpp
-struct SafeHash {
-    static uint64_t splitmix64(uint64_t x) {
-        x += 0x9e3779b97f4a7c15ULL;
-        x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9ULL;
-        x = (x ^ (x >> 27)) * 0x94d049bb133111ebULL;
-        return x ^ (x >> 31);
-    }
-    size_t operator()(uint64_t x) const noexcept {
-        static const uint64_t FIXED = (uint64_t)chrono::steady_clock::now().time_since_epoch().count();
-        return static_cast<size_t>(splitmix64(x + FIXED));
-    }
-};
-
-unordered_map<long long, int, SafeHash> safe;
-```
-
----
-
-## 25. Memory / Alignment Helpers
-
-```cpp
-alignas(64) int buf[256]; // reduce false sharing
-```
-
----
-
-## 26. Debug Helpers
-
-```cpp
-#define DBG(x) cerr << #x << " = " << (x) << "\n";
-```
-
----
-
-## 27. Common Patterns
+## 22. Common Patterns
 
 ```cpp
 // 1. Erase-remove
@@ -478,24 +444,7 @@ int id = lower_bound(b.begin(), b.end(), a[i]) - b.begin();
 
 ---
 
-## 28. Multithreading (C++11 basic)
-
-```cpp
-#include <thread>
-
-void work(int id) { /* ... */ }
-
-int main() {
-    thread t1(work, 1);
-    thread t2(work, 2);
-    t1.join();
-    t2.join();
-}
-```
-
----
-
-## 29. Exceptions (brief)
+## 23. Exceptions (brief)
 
 ```cpp
 try {
@@ -507,7 +456,7 @@ try {
 
 ---
 
-## 30. Compile Flags (example)
+## 24. Compile Flags (example)
 
 ```bash
 clang++ -std=c++17 -O2 -Wall -Wextra -Wshadow -DLOCAL code.cpp -o run
@@ -544,5 +493,6 @@ using namespace std;
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    // code
 }
 ```
