@@ -2,27 +2,29 @@
 #include <unordered_map>
 using namespace std;
 
+template <typename K, typename V>
 class LRUCache {
 private:
     struct Node {
-        int key;
-        int val;
+        K key;
+        V val;
         Node* next;
         Node* prev;
-        Node(int k, int v) : key(k), val(v), prev(NULL), next(NULL) {
-        }
+        Node(K k, V v) : key(k), val(v), prev(nullptr), next(nullptr) {}
     };
 
-    unordered_map<int, Node*> map;
+    unordered_map<K, Node*> map;
     int capacity, count;
     Node* head;
     Node* tail;
 
     void deleteNode(Node* node) {
+        if (!node || !node->prev || !node->next)
+            return;
         node->prev->next = node->next;
         node->next->prev = node->prev;
-        node->prev = NULL;
-        node->next = NULL;
+        node->prev = nullptr;
+        node->next = nullptr;
     }
 
     void addToHead(Node* node) {
@@ -34,24 +36,24 @@ private:
 
 public:
     LRUCache(int capacity) : capacity(capacity), count(0) {
-        head = new Node(0, 0);
-        tail = new Node(0, 0);
+        head = new Node(K{}, V{});
+        tail = new Node(K{}, V{});
         head->next = tail;
         tail->prev = head;
     }
 
-    int get(int key) {
+    V get(K key) {
         if (map.count(key)) {
             Node* node = map[key];
-            int value = node->val;
+            V value = node->val;
             deleteNode(node);
             addToHead(node);
             return value;
         }
-        return -1;
+        return V{};  // Default value if not found
     }
 
-    void put(int key, int value) {
+    void put(K key, V value) {
         if (map.count(key)) {
             Node* node = map[key];
             node->val = value;
@@ -59,51 +61,53 @@ public:
             addToHead(node);
         } else {
             Node* node = new Node(key, value);
-            map[key] = node;
             if (count < capacity) {
                 count++;
-                addToHead(node);
             } else {
                 Node* nodeToDelete = tail->prev;
                 map.erase(nodeToDelete->key);
                 deleteNode(nodeToDelete);
-                addToHead(node);
+                delete nodeToDelete;
             }
+            addToHead(node);
+            map[key] = node;
         }
     }
 
-    bool del(int key) {
+    bool del(K key) {
         if (!map.count(key)) {
             return false;
         }
         Node* to_remove = map[key];
         deleteNode(to_remove);
+        delete to_remove;
         map.erase(key);
         return true;
+    }
+
+    ~LRUCache() {
+        // Free all nodes
+        Node* curr = head;
+        while (curr) {
+            Node* next = curr->next;
+            delete curr;
+            curr = next;
+        }
     }
 };
 
 int main() {
-    LRUCache cache(2);
+    LRUCache<string, int> cache(2);
 
-    // it will store a key (1) with value
-    // 10 in the cache.
-    cache.put(1, 10);
+    cache.put("one", 1);
+    cache.put("two", 2);
+    cout << cache.get("one") << endl;  // 1
 
-    // it will store a key (2) with value 20 in the cache.
-    cache.put(2, 20);
-    cout << "Value for the key: 1 is " << cache.get(1) << endl;  // returns 10
+    cache.put("three", 3);             // evicts "two"
+    cout << cache.get("two") << endl;  // 0 (default int)
 
-    // removing key 2 and store a key (3) with value 30 in the cache.
-    cache.put(3, 30);
-
-    cout << "Value for the key: 2 is " << cache.get(2) << endl;  // returns -1 (not found)
-
-    // removing key 1 and store a key (4) with value 40 in the cache.
-    cache.put(4, 40);
-    cout << "Value for the key: 1 is " << cache.get(1) << endl;  // returns -1 (not found)
-    cout << "Value for the key: 3 is " << cache.get(3) << endl;  // returns 30
-    cout << "Value for the key: 4 is " << cache.get(4) << endl;  // return 40
-
-    return 0;
+    cache.put("four", 4);                // evicts "one"
+    cout << cache.get("one") << endl;    // 0 (default int)
+    cout << cache.get("three") << endl;  // 3
+    cout << cache.get("four") << endl;   // 4
 }

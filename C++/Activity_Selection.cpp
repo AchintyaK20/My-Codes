@@ -1,5 +1,5 @@
 // { Driver Code Starts
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
 // } Driver Code Ends
@@ -21,13 +21,13 @@ int activitySelection(int start[], int end[], int n)
         cout << a[i].first << " " << a[i].second << endl;
     }
     int c = 1;
-    int prev = a[0].second;
+    int prev = 0;
     for (int curr = 1; curr < n; curr++)
     {
-        if (a[curr].first >= prev)
+        if (a[curr].first >= a[prev].second)
         {
             c++;
-            prev = a[curr].second;
+            prev = curr;
         }
     }
     return c;

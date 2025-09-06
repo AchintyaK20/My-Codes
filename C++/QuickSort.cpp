@@ -1,4 +1,9 @@
-#include "bits/stdc++.h"
+#include <iostream>
+#include <vector>
+#include <utility>
+#include <algorithm>
+#include <unordered_map>
+#include <unordered_set>
 #define FAST_IO ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 #define ll long long
 #define ld long double
@@ -26,12 +31,10 @@ int HPartition(int arr[], int l, int r)
         {
             i++;
         } while (arr[i] < pivot);
-
         do
         {
             j--;
         } while (arr[j] > pivot);
-
         if (i >= j)
         {
             return j;
@@ -39,6 +42,7 @@ int HPartition(int arr[], int l, int r)
         swap(arr[i], arr[j]);
     }
 }
+
 int LPartition(int arr[], int l, int r)
 {
     int pivot = arr[r];
@@ -54,6 +58,7 @@ int LPartition(int arr[], int l, int r)
     swap(arr[i + 1], arr[r]);
     return i + 1;
 }
+
 void quicksort(int arr[], int l, int r)
 {
     if (l < r)

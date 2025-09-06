@@ -1,4 +1,5 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <iomanip>
 using namespace std;
 
 struct Item
@@ -7,11 +8,11 @@ struct Item
     int weight;
 };
 
-bool myCmp(Item const& a, Item const& b)
+bool myCmp(const Item& a, const Item& b)
 {
     double d1 = a.value / (double)a.weight;
     double d2 = b.value / (double)b.weight;
-    return (d1 > d2);
+    return d1 > d2;
 }
 double fractionalKnapsack(int W, Item arr[], int n)
 {

@@ -1,4 +1,9 @@
-#include "bits/stdc++.h"
+#include <iostream>
+#include <tuple>
+#include <queue>
+#include <stack>
+#include <climits>
+#include <map>
 #define FAST_IO ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 #define ll long long
 #define ld long double
@@ -21,12 +26,13 @@ public:
     int data;
     Node *left;
     Node *right;
-    Node(int d)
-    {
-        data = d;
-        left = NULL;
-        right = NULL;
-    }
+    Node(int d): data(d), left(NULL), right(NULL) {}
+    // Node(int d)
+    // {
+    //     data = d;
+    //     left = NULL;
+    //     right = NULL;
+    // }
 };
 
 // void LinkedListToBinaryTree(Node *head, TreeNode *&root)
@@ -91,8 +97,8 @@ Node* constructBstFromLevelOrder(int arr[], int n)
 vector<int> verticalTraversal(Node *root)
 {
     vector<int> v;
-    map <int, vector<int>> m;
-    queue <pair<Node*, int>> q;
+    map <int, vector<int> > m;
+    queue <pair<Node*, int> > q;
     q.push({root, 0});
     while (!q.empty())
     {

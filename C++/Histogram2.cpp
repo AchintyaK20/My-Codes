@@ -1,4 +1,4 @@
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
 int getMaxArea(int arr[], int n)
@@ -12,7 +12,8 @@ int getMaxArea(int arr[], int n)
     {
         while (!s.empty() && arr[s.top()] >= arr[i])
         {
-            tp = s.top(); s.pop();
+            tp = s.top(); 
+            s.pop();
             curr = arr[tp] * (s.empty() ? i : i - s.top() - 1);
             res = max(res, curr);
         }
