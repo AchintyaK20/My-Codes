@@ -1004,4 +1004,3 @@ int main() {
     std::cout << "RAND_MAX = " << INT_MAX << "\n";
     return 0;
 }
-

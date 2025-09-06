@@ -466,7 +466,7 @@ clang++ -std=c++17 -O2 -Wall -Wextra -Wshadow -DLOCAL code.cpp -o run
 
 ### Quick Reference Tables
 
-**Complexity (typical)**
+#### Complexity (typical)
 
 - `vector`: push\_back amortized O(1), insert/erase middle O(n)
 - `deque`: push/pop both ends O(1)
@@ -475,7 +475,7 @@ clang++ -std=c++17 -O2 -Wall -Wextra -Wshadow -DLOCAL code.cpp -o run
 - `unordered_set`/`unordered_map`: average O(1), worst O(n)
 - `priority_queue` push/pop O(log n)
 
-**Iterator Categories**
+#### Iterator Categories
 
 - Input/Output: `istream_iterator`, `ostream_iterator`
 - Forward: `forward_list`
